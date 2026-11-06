@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d1d2e">
+    <title>Live Bidding | AuctionHaus Seller Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar" aria-label="Seller portal navigation">
+        <a class="brand" href="#" aria-label="AuctionHaus Seller Portal home" style="text-decoration:none">
+            <span class="brand-mark" aria-hidden="true"><span>⌂</span></span>
+            <span>
+                <span class="brand-name">AUCTION<span>HAUS&LOT</span></span>
+                <span class="brand-subtitle">SELLER PORTAL</span>
+            </span>
+        </a>
+
+        <p class="section-label">WORKSPACE</p>
+        <div class="workspace">
+            <span class="avatar">MH</span>
+            <span class="workspace-copy">Meridian Holdings<small>Verified seller</small></span>
+            <span class="chevron" aria-hidden="true">›</span>
+        </div>
+
+        <p class="section-label">MAIN MENU</p>
+        <nav class="nav-list" aria-label="Main menu">
+            <?php foreach ($menuItems as $item): ?>
+                <a class="nav-item<?= !empty($item['active']) ? ' active' : '' ?>" href="#"<?= !empty($item['active']) ? ' aria-current="page"' : '' ?>>
+                    <span class="nav-icon" aria-hidden="true"><?= htmlspecialchars($item['icon'], ENT_QUOTES, 'UTF-8') ?></span>
+                    <span><?= htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8') ?></span>
+                    <?php if (!empty($item['count'])): ?><span class="nav-count"><?= htmlspecialchars($item['count'], ENT_QUOTES, 'UTF-8') ?></span><?php endif; ?>
+                </a>
+            <?php endforeach; ?>
+        </nav>
+
+        <section class="help-card" aria-label="Auction support">
+            <div class="help-icon" aria-hidden="true">♢</div>
+            <strong>Need assistance?</strong>
+            <p>Our auction support team is ready to help you succeed.</p>
+            <a class="help-link" href="mailto:support@auctionhaus.example">Contact support&nbsp; →</a>
+        </section>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div class="breadcrumbs"><span>Seller Portal</span><span class="crumb-arrow" aria-hidden="true">›</span><strong>Live Bidding</strong></div>
+            <div class="top-actions">
+                <label class="search">
+                    <span class="sr-only">Search properties and auctions</span>
+                    <span class="search-icon" aria-hidden="true">⌕</span>
+                    <input type="search" placeholder="Search properties, auctions...">
+                    <span class="shortcut" aria-hidden="true">⌘ K</span>
+                </label>
+                <button class="icon-button" type="button" aria-label="Notifications">♧<span class="notification-dot"></span></button>
+                <button class="add-button" type="button"><span aria-hidden="true">＋</span> Add Property</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <section class="heading-row" aria-labelledby="property-title">
+                <div>
+                    <div class="eyebrow">LIVE AUCTION · PR-24018</div>
+                    <h1 id="property-title">Harborview Modern Villa</h1>
+                    <p class="property-meta">24 Marina View Drive · Auction ends today at 6:00 PM</p>
+                </div>
+                <span class="live-pill">Live</span>
+            </section>
+
+            <section class="bid-summary" aria-label="Current auction summary">
+                <div class="summary-label">CURRENT HIGHEST BID</div>
+                <div class="highest-bid">$1,245,000</div>
+                <div class="reserve"><span aria-hidden="true">↗</span>$25,000 above reserve price</div>
+                <div class="summary-stats">
+                    <div class="stat"><strong>18</strong><small>active bidders</small></div>
+                    <div class="stat"><strong>42</strong><small>total bids</small></div>
+                    <div class="stat"><strong>04:18:32</strong><small>remaining</small></div>
+                </div>
+            </section>
+
+            <div class="dashboard-grid">
+                <section class="panel" aria-labelledby="history-title">
+                    <div class="panel-heading">
+                        <div>
+                            <h2 id="history-title">Live bidding history</h2>
+                            <p class="panel-subtitle">Bid amounts are immutable and administrator-audited</p>
+                        </div>
+                        <span class="updates">LIVE UPDATES</span>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th scope="col">RANK</th><th scope="col">BIDDER ID</th><th scope="col">BID AMOUNT</th><th scope="col">TIME</th></tr></thead>
+                            <tbody>
+                                <?php foreach ($bids as $bid): ?>
+                                    <tr>
+                                        <td><span class="rank"><?= (int) $bid['rank'] ?></span></td>
+                                        <td><?= htmlspecialchars($bid['bidder'], ENT_QUOTES, 'UTF-8') ?></td>
+                                        <td class="bid-amount">$<?= number_format((int) $bid['amount']) ?></td>
+                                        <td class="bid-time"><?= htmlspecialchars($bid['time'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a class="view-all" href="#">View all bid activity&nbsp; →</a>
+                </section>
+
+                <section class="panel" aria-labelledby="bidders-title">
+                    <h2 id="bidders-title">Registered bidders</h2>
+                    <p class="panel-subtitle">28 approved participants</p>
+                    <div class="bidder-list">
+                        <?php foreach ($bidders as $bidder): ?>
+                            <div class="bidder">
+                                <span class="bidder-avatar"><?= htmlspecialchars($bidder['initials'], ENT_QUOTES, 'UTF-8') ?></span>
+                                <span class="bidder-info">
+                                    <strong><?= htmlspecialchars($bidder['id'], ENT_QUOTES, 'UTF-8') ?></strong>
+                                    <small><?= htmlspecialchars($bidder['detail'], ENT_QUOTES, 'UTF-8') ?></small>
+                                </span>
+                                <span class="bidder-status"><?= htmlspecialchars($bidder['status'], ENT_QUOTES, 'UTF-8') ?></span>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <a class="view-all" href="#">View all bidders&nbsp; →</a>
+                </section>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navItems = document.querySelectorAll('.nav-item');
+        const searchInput = document.querySelector('.search input');
+        const notificationButton = document.querySelector('.icon-button');
+        const addPropertyButton = document.querySelector('.add-button');
+        const allViewLinks = document.querySelectorAll('.view-all');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        document.body.appendChild(toast);
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('visible');
+            clearTimeout(showToast.timeoutId);
+            showToast.timeoutId = setTimeout(function () {
+                toast.classList.remove('visible');
+            }, 1800);
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        navItems.forEach(function (item) {
+            item.addEventListener('click', function (event) {
+                event.preventDefault();
+                navItems.forEach(function (navItem) {
+                    navItem.classList.toggle('active', navItem === item);
+                    if (navItem === item) {
+                        navItem.setAttribute('aria-current', 'page');
+                    } else {
+                        navItem.removeAttribute('aria-current');
+                    }
+                });
+                showToast(item.textContent.trim().replace(/\s+/g, ' ') + ' selected');
+            });
+        });
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function () {
+                const query = this.value.trim().toLowerCase();
+                const tableRows = document.querySelectorAll('tbody tr');
+                const bidders = document.querySelectorAll('.bidder');
+
+                tableRows.forEach(function (row) {
+                    const match = !query || row.textContent.toLowerCase().includes(query);
+                    row.style.display = match ? '' : 'none';
+                });
+
+                bidders.forEach(function (bidder) {
+                    const match = !query || bidder.textContent.toLowerCase().includes(query);
+                    bidder.style.display = match ? '' : 'none';
+                });
+            });
+        }
+
+        if (notificationButton) {
+            notificationButton.addEventListener('click', function () {
+                const isActive = notificationButton.classList.toggle('is-active');
+                const dot = notificationButton.querySelector('.notification-dot');
+                if (dot) {
+                    dot.style.display = isActive ? 'none' : '';
+                }
+                showToast(isActive ? 'Notifications hidden' : 'Notifications enabled');
+            });
+        }
+
+        if (addPropertyButton) {
+            addPropertyButton.addEventListener('click', function () {
+                const propertyName = window.prompt('Add a new property name', 'Oceanview Residence');
+                if (!propertyName) {
+                    showToast('Property creation cancelled');
+                    return;
+                }
+
+                const finalName = propertyName.trim();
+                if (!finalName) {
+                    showToast('Please enter a valid property name');
+                    return;
+                }
+
+                const tableBody = document.querySelector('table tbody');
+                const row = document.createElement('tr');
+                const rank = document.createElement('td');
+                rank.innerHTML = '<span class="rank">NEW</span>';
+
+                const bidderCell = document.createElement('td');
+                bidderCell.textContent = finalName;
+
+                const amountCell = document.createElement('td');
+                amountCell.className = 'bid-amount';
+                amountCell.textContent = '$' + (Math.floor(Math.random() * 500000) + 1200000).toLocaleString('en-US');
+
+                const timeCell = document.createElement('td');
+                timeCell.className = 'bid-time';
+                timeCell.textContent = 'Just now';
+
+                row.appendChild(rank);
+                row.appendChild(bidderCell);
+                row.appendChild(amountCell);
+                row.appendChild(timeCell);
+                tableBody.insertBefore(row, tableBody.firstChild);
+
+                const bidderList = document.querySelector('.bidder-list');
+                if (bidderList) {
+                    const bidder = document.createElement('div');
+                    bidder.className = 'bidder';
+                    bidder.innerHTML = '<span class="bidder-avatar">' + escapeHtml(finalName.slice(0, 2).toUpperCase()) + '</span>' +
+                        '<span class="bidder-info"><strong>' + escapeHtml(finalName) + '</strong><small>New property listing</small></span>' +
+                        '<span class="bidder-status">LIVE</span>';
+                    bidderList.insertBefore(bidder, bidderList.firstChild);
+                }
+
+                showToast(finalName + ' added to auction queue');
+            });
+        }
+
+        allViewLinks.forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                const panel = link.closest('.panel');
+                if (panel) {
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+                showToast((panel && panel.querySelector('h2') ? panel.querySelector('h2').textContent : 'Section') + ' expanded');
+            });
+        });
+    });
+</script>
+</body>
+</html>
